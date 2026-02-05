@@ -10,45 +10,36 @@ class RidesService {
   //
   //  filter the rides starting from given departure location
   //
-  static List<Ride> _filterByDeparture(Location departure) {
-    const List<Ride> result = [];
-
-    for (var ride in availableRides) {
-      if (ride.departureLocation == departure) {
-        result.add(ride);
-      }
-    }
-
-    return result;
+  static List<Ride> _filterByDeparture(List<Ride> rides, Location departure) {
+    return availableRides
+        .where((ride) => ride.departureLocation == departure)
+        .toList();
   }
 
   //
   //  filter the rides starting for the given requested number of seats
   //
-  static List<Ride> _filterBySeatRequested(int requestedSeat) {
-    const List<Ride> result = [];
-
-    for (var ride in availableRides) {
-      if (ride.availableSeats > requestedSeat) {
-        result.add(ride);
-      }
-    }
-    return result;
+  static List<Ride> _filterBySeatRequested(
+    List<Ride> rides,
+    int requestedSeat,
+  ) {
+    return availableRides
+        .where((ride) => ride.availableSeats >= requestedSeat)
+        .toList();
   }
 
   //
   //  filter the rides   with several optional criteria (flexible filter options)
   //
   static List<Ride> filterBy({Location? departure, int? seatRequested}) {
-    const List<Ride> result = [];
-
-    for (var ride in availableRides) {
-      if (ride.departureLocation != departure) continue;
-      if (ride.availableSeats < seatRequested!) continue;
-
-      result.add(ride);
+    List<Ride> results = availableRides;
+    if (departure != null) {
+      results = _filterByDeparture(results, departure);
+    }
+    if (seatRequested != null) {
+      results = _filterBySeatRequested(results, seatRequested);
     }
 
-    return result;
+    return results;
   }
 }
