@@ -82,3 +82,10 @@ ThemeData appTheme = ThemeData(
   fontFamily: 'Eesti',
   scaffoldBackgroundColor: Colors.white,
 );
+
+///
+/// Definition of App Theme.
+///
+class BlaSize {
+  static const double icon = 24;
+}

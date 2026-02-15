@@ -8,12 +8,18 @@ class BlaButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final IconData? icon;
+  final bool? isBorderRadius;
+  final bool? isTopRadius;
+  final bool? isSplashing;
   const BlaButton({
     super.key,
     this.variant = ButtonVariant.primary,
     required this.text,
     required this.onPressed,
     this.icon,
+    this.isSplashing = true,
+    this.isBorderRadius = true,
+    this.isTopRadius = true,
   });
 
   @override
@@ -36,6 +42,15 @@ class BlaButton extends StatelessWidget {
       children.add(SizedBox(width: BlaSpacings.s));
     }
 
+    BorderRadius borderRadius = isBorderRadius == true && isTopRadius == false
+        ? BorderRadius.only(
+            bottomLeft: Radius.circular(BlaSpacings.radius),
+            bottomRight: Radius.circular(BlaSpacings.radius),
+          )
+        : isBorderRadius == true && isTopRadius == true
+        ? BorderRadius.circular(BlaSpacings.radius)
+        : BorderRadius.zero;
+
     Text buttonText = Text(
       text,
       style: TextStyle(
@@ -47,23 +62,19 @@ class BlaButton extends StatelessWidget {
 
     children.add(buttonText);
 
-    return SizedBox(
-      child: OutlinedButton(
-        onPressed: onPressed,
+    return OutlinedButton(
+      onPressed: onPressed,
 
-        style: OutlinedButton.styleFrom(
-          backgroundColor: background,
+      style: OutlinedButton.styleFrom(
+        backgroundColor: background,
 
-          padding: EdgeInsets.symmetric(vertical: 20),
-          shape: RoundedRectangleBorder(
-            borderRadius: .circular(BlaSpacings.radius),
-            side: border,
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [...children],
-        ),
+        padding: EdgeInsets.symmetric(vertical: 20),
+        side: border,
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [...children],
       ),
     );
   }
