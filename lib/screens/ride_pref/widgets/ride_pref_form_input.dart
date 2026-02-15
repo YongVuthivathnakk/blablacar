@@ -34,8 +34,11 @@ class RidePrefFormInput extends StatelessWidget {
       ),
 
       leading: Icon(leftIcon, color: BlaColors.iconLight),
-      trailing: (rightIcon != null && onRightIconPressed != null)
-          ? BlaIconButton(onPressed: onRightIconPressed!, icon: rightIcon!)
+      trailing: rightIcon != null
+          ? BlaIconButton(
+              onPressed: onRightIconPressed ?? () {},
+              icon: rightIcon!,
+            )
           : null,
 
       mouseCursor: SystemMouseCursors.click,

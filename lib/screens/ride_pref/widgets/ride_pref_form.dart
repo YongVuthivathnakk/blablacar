@@ -123,6 +123,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
           title: departureLabel,
           leftIcon: Icons.circle_outlined,
           rightIcon: showLocationSwitcher ? Icons.swap_vert : null,
+          onRightIconPressed: onPressSwitchLocation,
           onPressed: onDepartuePressed,
         ),
         BlaDivider(),
